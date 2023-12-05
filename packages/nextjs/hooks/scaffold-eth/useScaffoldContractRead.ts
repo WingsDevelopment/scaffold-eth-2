@@ -16,6 +16,7 @@ import {
  * @param config.contractName - deployed contract name
  * @param config.functionName - name of the function to be called
  * @param config.args - args to be passed to the function call
+ * @param config.overrideContractAddress - override contract address that is configured in deployedContracts/externalContracts
  */
 export const useScaffoldContractRead = <
   TContractName extends ContractName,
@@ -24,9 +25,10 @@ export const useScaffoldContractRead = <
   contractName,
   functionName,
   args,
+  overrideContractAddress,
   ...readConfig
 }: UseScaffoldReadConfig<TContractName, TFunctionName>) => {
-  const { data: deployedContract } = useDeployedContractInfo(contractName);
+  const { data: deployedContract } = useDeployedContractInfo(contractName, overrideContractAddress);
   const { targetNetwork } = useTargetNetwork();
 
   return useContractRead({

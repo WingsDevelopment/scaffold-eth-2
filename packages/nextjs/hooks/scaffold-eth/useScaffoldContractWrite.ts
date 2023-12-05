@@ -17,6 +17,7 @@ type UpdatedArgs = Parameters<ReturnType<typeof useContractWrite<Abi, string, un
  * @param config.functionName - name of the function to be called
  * @param config.args - arguments for the function
  * @param config.value - value in ETH that will be sent with transaction
+ * @param config.overrideContractAddress - override contract address that is configured in deployedContracts/externalContracts
  */
 export const useScaffoldContractWrite = <
   TContractName extends ContractName,
@@ -28,9 +29,10 @@ export const useScaffoldContractWrite = <
   value,
   onBlockConfirmation,
   blockConfirmations,
+  overrideContractAddress,
   ...writeConfig
 }: UseScaffoldWriteConfig<TContractName, TFunctionName>) => {
-  const { data: deployedContractData } = useDeployedContractInfo(contractName);
+  const { data: deployedContractData } = useDeployedContractInfo(contractName, overrideContractAddress);
   const { chain } = useNetwork();
   const writeTx = useTransactor();
   const [isMining, setIsMining] = useState(false);
